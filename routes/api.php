@@ -18,9 +18,14 @@ Route::prefix('v1')->group(function () {
     Route::get('/', function() {
         return responseJson(1, 'Task-Manager is running');
     });
+
     Route::prefix('user')->group(function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login')->name('login');
+    });
+
+    Route::middleware('auth:api')->group(function () {
+        Route::post('logout', 'AuthController@logout');
     });
 });
 
