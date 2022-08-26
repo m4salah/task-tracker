@@ -22,10 +22,16 @@ Route::prefix('v1')->group(function () {
     Route::prefix('user')->group(function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login')->name('login');
+
+        Route::middleware('auth:api')->group(function () {
+            Route::post('logout', 'AuthController@logout');
+        });
     });
 
-    Route::middleware('auth:api')->group(function () {
-        Route::post('logout', 'AuthController@logout');
+    Route::prefix('projects')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+            Route::get('all', 'ProjectController@index');
+            Route::post('create', 'ProjectController@create');
+        });
     });
 });
-
