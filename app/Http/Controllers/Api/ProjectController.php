@@ -34,9 +34,12 @@ class ProjectController extends Controller
 
     public function update($id, Request $request)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::find($id);
         $user = auth()->user();
-        if ($project && $user && $user->is_admin && $user->id == $project->created_by){
+        if(!$project) {
+            return responseJson(0, 'Project not found');
+        }
+        if ($user && $user->is_admin && $user->id == $project->created_by){
             if($request->has('title') && $request->title != ''){
                 $project->update([
                     'title' => request('title'),
@@ -54,15 +57,18 @@ class ProjectController extends Controller
 
     public function delete($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::find($id);
         $user = auth()->user();
-        if ($project && $user && $user->is_admin && $user->id == $project->created_by){
+        if(!$project) {
+            return responseJson(0, 'Project not found');
+        }
+        if ($user && $user->is_admin && $user->id == $project->created_by){
             if(count($project->tasks) > 0) {
                 return responseJson(0, 'Project has tasks, delete them first');
             }
             $project->delete();
             return responseJson(1, 'Project deleted successfully');
         }
-        return responseJson(1, 'Project not found');
+        return responseJson(1, 'Not authorized');
     }
 }
