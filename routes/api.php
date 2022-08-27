@@ -34,4 +34,12 @@ Route::prefix('v1')->group(function () {
             Route::post('create', 'ProjectController@create');
         });
     });
+
+    Route::prefix('tasks')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+            Route::post('all', 'TaskController@index');
+            Route::post('create', 'TaskController@create');
+            Route::post('userTasks', 'TaskController@userTasks');
+        });
+    });
 });
