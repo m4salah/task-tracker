@@ -31,4 +31,23 @@ class ProjectController extends Controller
         }
         return responseJson(0, 'User not authorized');
     }
+
+    public function update($id)
+    {
+        $project = Project::findOrFail($id);
+        if ($project){
+            if($request->has('title') && $request->title != ''){
+                $task->update([
+                    'title' => request('title'),
+                ]);
+            }
+            if($request->has('description') && $request->description != ''){
+                $task->update([
+                    'description' => request('description'),
+                ]);
+            }
+            return responseJson(1, 'Project updated successfully');
+        }
+        return responseJson(0, 'Project not found');
+    }
 }
