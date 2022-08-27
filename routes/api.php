@@ -32,6 +32,7 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:api')->group(function () {
             Route::get('all', 'ProjectController@index');
             Route::post('create', 'ProjectController@create');
+            Route::post('update/{id}', 'ProjectController@update');
         });
     });
 
@@ -40,6 +41,7 @@ Route::prefix('v1')->group(function () {
             Route::post('all', 'TaskController@index');
             Route::post('create', 'TaskController@create');
             Route::post('userTasks', 'TaskController@userTasks');
+            Route::post('update/{id}', 'TaskController@update');
         });
     });
 });
