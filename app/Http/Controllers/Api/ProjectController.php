@@ -51,4 +51,18 @@ class ProjectController extends Controller
         }
         return responseJson(0, 'Project not found');
     }
+
+    public function delete($id)
+    {
+        $project = Project::findOrFail($id);
+        $user = auth()->user();
+        if ($project && $user && $user->is_admin && $user->id == $project->created_by){
+            if(count($project->tasks) > 0) {
+                return responseJson(0, 'Project has tasks, delete them first');
+            }
+            $project->delete();
+            return responseJson(1, 'Project deleted successfully');
+        }
+        return responseJson(1, 'Project not found');
+    }
 }
