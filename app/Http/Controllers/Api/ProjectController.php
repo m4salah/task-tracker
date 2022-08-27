@@ -32,18 +32,18 @@ class ProjectController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
-    public function update($id)
+    public function update($id, Request $request)
     {
         $project = Project::findOrFail($id);
         $user = auth()->user();
         if ($project && $user && $user->is_admin && $user->id == $project->created_by){
             if($request->has('title') && $request->title != ''){
-                $task->update([
+                $project->update([
                     'title' => request('title'),
                 ]);
             }
             if($request->has('description') && $request->description != ''){
-                $task->update([
+                $project->update([
                     'description' => request('description'),
                 ]);
             }

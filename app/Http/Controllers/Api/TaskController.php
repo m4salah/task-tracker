@@ -51,7 +51,7 @@ class TaskController extends Controller
     }
 
 
-    public function update($id)
+    public function update($id, Request $request)
     {
         $task = Task::findOrFail($id);
         $project = $task->project;
