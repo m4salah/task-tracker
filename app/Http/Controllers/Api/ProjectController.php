@@ -35,7 +35,8 @@ class ProjectController extends Controller
     public function update($id)
     {
         $project = Project::findOrFail($id);
-        if ($project){
+        $user = auth()->user();
+        if ($project && $user && $user->is_admin && $user->id == $project->created_by){
             if($request->has('title') && $request->title != ''){
                 $task->update([
                     'title' => request('title'),

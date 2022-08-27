@@ -54,7 +54,9 @@ class TaskController extends Controller
     public function update($id)
     {
         $task = Task::findOrFail($id);
-        if ($task){
+        $project = $task->project;
+        $user = auth()->user();
+        if ($task && $user && $user->is_admin && $user->id == $project->created_by){
             if($request->has('title') && $request->title != ''){
                 $task->update([
                     'title' => request('title'),
