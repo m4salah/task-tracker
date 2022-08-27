@@ -40,7 +40,7 @@ class TaskController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
-    public function indexForUser(Request $request) {
+    public function userTasks(Request $request) {
         $user = auth()->user();
         $project = Project::findOrFail($request->project_id);
         if($user && !$user->is_admin) {
@@ -48,5 +48,30 @@ class TaskController extends Controller
             return responseJson(1, 'All tasks', $tasks);
         }
         return responseJson(0, 'User not authorized');
+    }
+
+
+    public function update($id)
+    {
+        $task = Task::findOrFail($id);
+        if ($task){
+            if($request->has('title') && $request->title != ''){
+                $task->update([
+                    'title' => request('title'),
+                ]);
+            }
+            if($request->has('description') && $request->description != ''){
+                $task->update([
+                    'description' => request('description'),
+                ]);
+            }
+            if($request->has('assigned_to') && $request->assigned_to != ''){
+                $task->update([
+                    'assigned_to ' => request('assigned_to '),
+                ]);
+            }
+            return responseJson(1, 'Task updated successfully');
+        }
+        return responseJson(0, 'Task not found');
     }
 }
