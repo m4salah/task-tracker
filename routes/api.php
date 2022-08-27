@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
             Route::get('all', 'ProjectController@index');
             Route::post('create', 'ProjectController@create');
             Route::post('update/{id}', 'ProjectController@update');
+            Route::post('delete/{id}', 'ProjectController@delete');
         });
     });
 
@@ -42,6 +43,7 @@ Route::prefix('v1')->group(function () {
             Route::post('create', 'TaskController@create');
             Route::post('userTasks', 'TaskController@userTasks');
             Route::post('update/{id}', 'TaskController@update');
+            Route::post('delete/{id}', 'TaskController@delete');
         });
     });
 });
