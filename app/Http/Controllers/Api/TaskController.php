@@ -16,12 +16,12 @@ class TaskController extends Controller
             'project_id' => 'required',
         ]);
         $user = auth()->user();
-        $project = Project::findOrFail($request->project_id);
-        if($user && $user->is_admin && $user->id == $project->created_by) {
-            $tasks = $project->tasks()->get();
+        $project = Project::find($request->project_id);
+        if($project && $user && $user->is_admin && $user->id == $project->created_by) {
+            $tasks = $project->tasks;
             return responseJson(1, 'All tasks', $tasks);
         }
-        return responseJson(0, 'User not authorized');
+        return responseJson(0, 'User not authorized or project not found');
     }
 
     public function create(Request $request) {
@@ -75,5 +75,20 @@ class TaskController extends Controller
             return responseJson(1, 'Task updated successfully');
         }
         return responseJson(0, 'Task not found');
+    }
+
+    public function delete($id)
+    {
+        $task = Task::findO($id);
+        if(!$task){
+            return responseJson(1, 'Task not found');
+        }
+        $project = $task->project;
+        $user = auth()->user();
+        if ($task && $user && $user->is_admin && $user->id == $project->created_by){
+            $task->delete();
+            return responseJson(1, 'Task deleted successfully');
+        }
+        return responseJson(1, 'Task not found');
     }
 }
