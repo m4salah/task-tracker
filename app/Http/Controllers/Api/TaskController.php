@@ -67,7 +67,7 @@ class TaskController extends Controller
             }
             if($request->has('assigned_to') && $request->assigned_to != ''){
                 $task->update([
-                    'assigned_to ' => request('assigned_to '),
+                    'assigned_to' => request('assigned_to'),
                 ]);
             }
             return responseJson(1, 'Task updated successfully');
