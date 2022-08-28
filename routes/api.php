@@ -24,7 +24,7 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'AuthController@login')->name('login');
 
         Route::middleware('auth:api')->group(function () {
-            Route::post('logout', 'AuthController@logout');
+            Route::get('logout', 'AuthController@logout');
         });
     });
 
@@ -41,7 +41,7 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:api')->group(function () {
             Route::post('all', 'TaskController@index');
             Route::post('create', 'TaskController@create');
-            Route::post('userTasks', 'TaskController@userTasks');
+            Route::get('userTasks', 'TaskController@userTasks');
             Route::post('update/{id}', 'TaskController@update');
             Route::post('delete/{id}', 'TaskController@delete');
             Route::post('submit/{id}', 'TaskController@submit');
