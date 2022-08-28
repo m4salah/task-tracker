@@ -1,64 +1,405 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task-tracker
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Dockerized Task-tracker app, using PHP / Laravel
 
-## About Laravel
+* PHP version:- 8.1.6
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* Laravel version:- 9.19
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Dependencies
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* a clone of this repo on your machine
+* [Docker](https://docs.docker.com/)
 
-## Learning Laravel
+## Run the app in your machine: -
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* clone the project and setup the env file
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
 
-## Laravel Sponsors
+git clone https://github.com/mohamedspicer/task-tracker
+cd task-tracker
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* rename the .env-example to .env and edit the environment variable as you like
 
-### Premium Partners
+* run the docker-compose
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+docker-compose up -d
+```
 
-## Contributing
+## How to run the test suite
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
 
-## Code of Conduct
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Services
 
-## Security Vulnerabilities
+* the application
+* mysql
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## API Endpoints
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Default Path
+
+```url
+/api/v1/
+```
+
+#### GET /
+
+Verifies that application is up and running.
+
+##### Sample response
+
+```json
+
+{
+    "status": 1, 
+    "message": "Task-Tracker is runnig",
+    "data": null 
+}
+```
+
+### User related Endpoints
+
+#### POST 
+```http
+/user/register
+```
+
+Creates a new user by register.
+
+##### Sample body request (required)
+
+```json
+
+{
+    "email": "test123@test.com",
+    "password": "1234567",
+    "password_confirmation": "1234567",
+    "is_admin": 1,
+    "name": "Test User"
+}
+```
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "User Registers succefully",
+    "data": {
+        "user": {
+            "email": "test123@test.com",
+            "is_admin": 1,
+            "name": "Test User",
+            "updated_at": "2022-08-28T17:42:58.000000Z",
+            "created_at": "2022-08-28T17:42:58.000000Z",
+            "id": 2
+        },
+        "token": "3|4I88V1vcMdOJy9J7EybXMsinXfWLqX0ytkGEvRsf"
+    }
+}
+```
+
+#### POST
+```http
+/user/login
+```
+
+user login and retrieve token.
+
+##### Sample body request (required)
+
+```json
+
+{
+    "email": "test123@test.com",
+    "password": "1234567",
+}
+```
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "User Logged",
+    "data": {
+        "user": {
+            "id": 1,
+            "name": "Mohamed",
+            "email": "test123@com.com",
+            "email_verified_at": null,
+            "created_at": "2022-08-28T16:49:21.000000Z",
+            "updated_at": "2022-08-28T16:49:21.000000Z",
+            "is_admin": 0
+        },
+        "api_token": "6|dAYhLX3HNNNFr5KUSUCFfNDXUkNbst04r9pb2iV2"
+    }
+}
+```
+
+#### GET
+```http
+/user/logout
+```
+
+user logout and revoke his tokens.
+
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Logout successfully",
+    "data": null
+}
+```
+
+
+### Project related Endpoints
+
+#### GET
+```http
+/projects/all
+```
+
+Displays all projects that admin created (Allowed for admins only)
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "All projects admin created",
+    "data": [
+        {
+            "id": 1,
+            "title": "titleProject",
+            "description": "description Project"
+        },
+        {
+            "id": 2,
+            "title": "titleProject1",
+            "description": "description Project1"
+        },
+        {
+            "id": 3,
+            "title": "titleProject2",
+            "description": "description Project2"
+        }
+    ]
+}
+```
+
+#### POST
+```http
+/projects/create
+```
+
+Create new project (Allowed for admins only)
+
+##### Sample body request (required)
+
+```json
+
+{
+    "title": "titleProject",
+    "description": "description Project"
+}
+```
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "project created succefully",
+    "data": null
+}
+```
+
+#### POST
+```http
+/projects/update/{id}
+```
+
+Update existing project (Allowed for admins only)
+
+##### Sample body request (required)
+
+```json
+
+{
+    "title": "editedTitleProject",
+}
+```
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Project updated successfully",
+    "data": null
+}
+```
+
+#### POST
+```http
+/projects/delete/{id}
+```
+
+Delete existing project (Allowed for admins only).
+if project contains tasks the project will not deleted
+
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Project deleted successfully",
+    "data": null
+}
+```
+
+### Task related Endpoints
+
+#### POST
+```http
+/tasks/all
+```
+
+Displays all tasks that admin created for specific project (Allowed for admins only)
+
+##### Sample body request (required)
+
+```json
+
+{
+    "project_id": 2
+}
+```
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "All tasks",
+    "data": [
+        {
+            "id": 1,
+            "title": "title task",
+            "description": "description task",
+            "project_id": 2,
+            "assigned_to": 1,
+            "created_at": "2022-08-28T18:28:20.000000Z",
+            "updated_at": "2022-08-28T18:28:20.000000Z",
+            "submitted": 0
+        }
+    ]
+}
+```
+
+#### GET
+```http
+/tasks/userTasks
+```
+
+User Tasks which assigned to him (Allowed to users)
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "All tasks",
+    "data": [
+        {
+            "id": 2,
+            "title": "title task",
+            "description": "description task",
+            "project_id": 2,
+            "assigned_to": 1,
+            "created_at": "2022-08-28T18:28:28.000000Z",
+            "updated_at": "2022-08-28T18:28:28.000000Z",
+            "submitted": 0
+        }
+    ]
+}
+```
+
+#### POST
+```http
+/tasks/update/{id}
+```
+
+Update existing task (Allowed for admins only)
+
+##### Sample body request (required)
+
+```json
+
+{
+    "title": "editedTitleTask",
+}
+```
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Task updated successfully",
+    "data": null
+}
+```
+
+#### POST
+```http
+/tasks/delete/{id}
+```
+
+Delete existing task (Allowed for admins only).
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Project deleted successfully",
+    "data": null
+}
+```
+
+#### POST
+```http
+/tasks/submit/{id}
+```
+
+Submit task (Allowed for user).
+
+##### Sample response
+
+```json
+
+{
+    "status": 1,
+    "message": "Task submitted succesfully",
+    "data": null
+}
+```
