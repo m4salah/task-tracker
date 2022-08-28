@@ -11,6 +11,11 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+    /**
+     * Display a listing of the tasks.
+     *
+     * @param  int  $project_id
+     */
     public function index(Request $request) {
         $request->validate([
             'project_id' => 'required',
@@ -27,6 +32,15 @@ class TaskController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
+    /**
+     * create task for project
+     *
+     * @param int  $project_id
+     * @param string  $title
+     * @param string  $description
+     * @param boolean  $assigned_to
+     * @return json
+     */
     public function create(Request $request) {
         $request->validate([
             'project_id' => 'required',
@@ -46,8 +60,18 @@ class TaskController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
+
+    /**
+     * user tasks
+     *
+     * @param int  $project_id
+     * @return json
+     */
     public function userTasks(Request $request) {
         $user = auth()->user();
+        $request->validate([
+            'project_id' => 'required',
+        ]);
         $project = Project::find($request->project_id);
         if($user && !$user->is_admin) {
             $tasks = Task::where('assigned_to', $user->id)->get();
@@ -57,6 +81,14 @@ class TaskController extends Controller
     }
 
 
+    /**
+     * update task for project
+     *
+     * @param string  $title
+     * @param string  $description
+     * @param boolean  $assigned_to
+     * @return json
+     */
     public function update($id, Request $request)
     {
         $task = Task::find($id);
@@ -89,6 +121,12 @@ class TaskController extends Controller
         return responseJson(1, 'Task updated successfully');
     }
 
+    /**
+     * submit task
+     *
+     * @param int  $id
+     * @return json
+     */
     public function submit($id) {
         $user = auth()->user();
         $task = Task::find($id);
@@ -106,6 +144,12 @@ class TaskController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
+    /**
+     * delete task for project
+     *
+     * @param int  $id
+     * @return json
+     */
     public function delete($id)
     {
         $task = Task::findO($id);
