@@ -10,6 +10,11 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
+    /**
+     * Display a listing of the projects.
+     *
+     * @return json
+     */
     public function index() {
         $user = auth()->user();
         if($user && $user->is_admin) {
@@ -19,6 +24,13 @@ class ProjectController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
+    /**
+     * create project
+     *
+     * @param string  $title
+     * @param string  $description
+     * @return json
+     */
     public function create(Request $request) {
         $request->validate([
             'title' => 'required',
@@ -32,6 +44,11 @@ class ProjectController extends Controller
         return responseJson(0, 'User not authorized');
     }
 
+    /**
+     * Update specified project
+     *
+     * @return json
+     */
     public function update($id, Request $request)
     {
         $project = Project::find($id);
@@ -55,6 +72,11 @@ class ProjectController extends Controller
         return responseJson(0, 'Project not found');
     }
 
+    /**
+     * Delete specified project
+     *
+     * @return json
+     */
     public function delete($id)
     {
         $project = Project::find($id);
