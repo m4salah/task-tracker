@@ -29,11 +29,6 @@ cd task-tracker
 docker-compose up -d
 ```
 
-## How to run the test suite
-
-```bash
-
-```
 
 ## Services
 
@@ -67,7 +62,7 @@ Verifies that application is up and running.
 ### User related Endpoints
 
 #### POST 
-```http
+```url
 /user/register
 ```
 
@@ -108,7 +103,7 @@ Creates a new user by register.
 ```
 
 #### POST
-```http
+```url
 /user/login
 ```
 
@@ -146,7 +141,7 @@ user login and retrieve token.
 ```
 
 #### GET
-```http
+```url
 /user/logout
 ```
 
@@ -168,7 +163,7 @@ user logout and revoke his tokens.
 ### Project related Endpoints
 
 #### GET
-```http
+```url
 /projects/all
 ```
 
@@ -202,7 +197,7 @@ Displays all projects that admin created (Allowed for admins only)
 ```
 
 #### POST
-```http
+```url
 /projects/create
 ```
 
@@ -229,7 +224,7 @@ Create new project (Allowed for admins only)
 ```
 
 #### POST
-```http
+```url
 /projects/update/{id}
 ```
 
@@ -255,7 +250,7 @@ Update existing project (Allowed for admins only)
 ```
 
 #### POST
-```http
+```url
 /projects/delete/{id}
 ```
 
@@ -277,7 +272,7 @@ if project contains tasks the project will not deleted
 ### Task related Endpoints
 
 #### POST
-```http
+```url
 /tasks/all
 ```
 
@@ -314,7 +309,7 @@ Displays all tasks that admin created for specific project (Allowed for admins o
 ```
 
 #### GET
-```http
+```url
 /tasks/userTasks
 ```
 
@@ -343,7 +338,7 @@ User Tasks which assigned to him (Allowed to users)
 ```
 
 #### POST
-```http
+```url
 /tasks/update/{id}
 ```
 
@@ -369,7 +364,7 @@ Update existing task (Allowed for admins only)
 ```
 
 #### POST
-```http
+```url
 /tasks/delete/{id}
 ```
 
@@ -387,7 +382,7 @@ Delete existing task (Allowed for admins only).
 ```
 
 #### POST
-```http
+```url
 /tasks/submit/{id}
 ```
 
