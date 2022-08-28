@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function() {
-        return responseJson(1, 'Task-Manager is running');
+        return responseJson(1, 'Task-Tracker is running');
     });
 
     Route::prefix('user')->group(function () {
