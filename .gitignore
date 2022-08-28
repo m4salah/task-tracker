@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 .phpdoc
 docs
+storage/dbdata/
