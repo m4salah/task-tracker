@@ -69,12 +69,12 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if(auth()->validate($request->all())) {
             $token = $user->createToken($request->email)->plainTextToken;
-            return responseJson(1, 'تم التسجيل الدخول', [
+            return responseJson(1, 'User Logged', [
                 'user' => $user,
                 'api_token' => $token
             ]);
         } else {
-            return responseJson(0, ' تسجيل الدخول غير صحيح');
+            return responseJson(0, 'Something Wrong try again');
         }
     }
 
