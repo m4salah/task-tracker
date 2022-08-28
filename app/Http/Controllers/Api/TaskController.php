@@ -69,10 +69,6 @@ class TaskController extends Controller
      */
     public function userTasks(Request $request) {
         $user = auth()->user();
-        $request->validate([
-            'project_id' => 'required',
-        ]);
-        $project = Project::find($request->project_id);
         if($user && !$user->is_admin) {
             $tasks = Task::where('assigned_to', $user->id)->get();
             return responseJson(1, 'All tasks', $tasks);
