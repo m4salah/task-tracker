@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    networks:
+      backend:
+        aliases:
+          - app
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    command: --init-file /entrypoints/init.sql
+    environment:
+      MYSQL_DATABASE: task_manager
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+      - ./init.sql:/entrypoints/init.sql
+    ports:
+      - 3307:3306
+    networks:
+      backend:
+        aliases:
+          - db
+
+
+networks:
+  backend:
+    name: backend-network
