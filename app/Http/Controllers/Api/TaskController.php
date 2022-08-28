@@ -92,10 +92,15 @@ class TaskController extends Controller
     public function submit($id) {
         $user = auth()->user();
         $task = Task::find($id);
-        if($user && $task && !$user->is_admin && $user->id == $task->assigned_to && $task->submitted == 0) {
-            $task->update([
-                'submitted' => 1,
-            ]);
+        if(!$task) {
+            return responseJson(0, 'Task not found');
+        }
+        if($task->submitted) {
+            return responseJson(0, 'Task already submitted');
+        }
+        if($user && !$user->is_admin && $user->id == $task->assigned_to) {
+            $task->submitted = 1;
+            $task->save();
             return responseJson(1, 'Task submitted succesfully');
         }
         return responseJson(0, 'User not authorized');
