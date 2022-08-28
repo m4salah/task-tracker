@@ -44,6 +44,7 @@ Route::prefix('v1')->group(function () {
             Route::post('userTasks', 'TaskController@userTasks');
             Route::post('update/{id}', 'TaskController@update');
             Route::post('delete/{id}', 'TaskController@delete');
+            Route::post('submit/{id}', 'TaskController@submit');
         });
     });
 });
